@@ -1,0 +1,32 @@
+version: "3.7"
+
+networks:
+  diagnostico:
+    driver: bridge
+
+services:
+  postgres:
+    container_name: postgres_diagnostico
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=root
+      - POSTGRES_DB=diagnostico
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [ "CMD-SHELL", "postgres --eval 'db.runCommand({ connectionStatus: 1 })'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: none
+    ports:
+      - "5434:5432"
+    networks:
+      - diagnostico
+      
+volumes:
+  pg-data:
+    driver: local

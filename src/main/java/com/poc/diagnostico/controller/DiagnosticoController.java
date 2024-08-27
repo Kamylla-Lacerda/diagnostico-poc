@@ -26,6 +26,5 @@ public class DiagnosticoController {
     public ResponseEntity<List<DiagnosticoDTO>> findDiagnosticosDTO() {
         List<DiagnosticoDTO> diagnosticos = service.findDiagnosticosDTO();
         return ResponseEntity.ok().body(diagnosticos);
-
     }
 }

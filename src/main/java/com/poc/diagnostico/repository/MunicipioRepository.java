@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface MunicipioRepository extends JpaRepository<Municipio, UUID> {
+public interface MunicipioRepository extends JpaRepository<Municipio, Long> {
 }

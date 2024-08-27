@@ -34,3 +34,4 @@ public class Escola {
     @Column(name = "QNT_ALUNO")
     private Integer quantidadeAluno;
 }
+

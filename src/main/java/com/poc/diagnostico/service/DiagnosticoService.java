@@ -6,6 +6,7 @@ import com.poc.diagnostico.mapper.DiagnosticoMapper;
 import com.poc.diagnostico.repository.DiagnosticoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +21,10 @@ public class DiagnosticoService {
     @Autowired
     private DiagnosticoMapper mapper;
 
-    public List<DiagnosticoDTO> findAllDiagnosticosDTO(DiagnosticoFilterRequest filter) {
-        return mapper.diagnosticosToDiagnosticoDTOs(repository.findAll(filter.toSpecification()));
+    public List<DiagnosticoDTO> findDiagnosticos(DiagnosticoFilterRequest filter) {
+        Sort sort = Sort.by(Sort.Order.asc("predioEscola.predio.regional.nome").ignoreCase());
+
+        return mapper.diagnosticosToDiagnosticoDTOs(repository.findAll(filter.toSpecification(), sort));
     }
 
 }

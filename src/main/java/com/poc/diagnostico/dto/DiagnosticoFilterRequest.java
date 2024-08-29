@@ -9,16 +9,13 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-import static com.poc.diagnostico.specification.DiagnosticoSpecification.anoContains;
-import static com.poc.diagnostico.specification.DiagnosticoSpecification.escolaContains;
-import static com.poc.diagnostico.specification.DiagnosticoSpecification.municipioContains;
-import static com.poc.diagnostico.specification.DiagnosticoSpecification.regionalContains;
-import static com.poc.diagnostico.specification.DiagnosticoSpecification.statusContains;
-import static com.poc.diagnostico.specification.DiagnosticoSpecification.tipoPredioContains;
+import static com.poc.diagnostico.specification.DiagnosticoSpecification.*;
+
 
 @Setter
 @Getter
 public class DiagnosticoFilterRequest {
+
     private Integer ano;
     private String regional;
     private List<String> municipios;
@@ -28,12 +25,13 @@ public class DiagnosticoFilterRequest {
 
 
     public Specification<Diagnostico> toSpecification() {
-        return anoContains(ano)
-                    .and(regionalContains(regional)
-                    .and(municipioContains(municipios)
-                    .and(escolaContains(escola)
-                    .and(tipoPredioContains(tipoPredio)
-                    .and(statusContains(statusDiagnostico))
+        return
+                filtrarPorAno(ano)
+                .and(filtrarPorNomeRegional(regional)
+                .and(filtrarPorMunicipio(municipios)
+                .and(filtrarPorEscola(escola)
+                .and(filtrarPorTipoPredio(tipoPredio)
+                .and(filtrarPorStatus(statusDiagnostico))
                 ))));
     }
 }

@@ -23,8 +23,8 @@ public class DiagnosticoController {
     private DiagnosticoService service;
 
     @GetMapping()
-    public ResponseEntity<List<DiagnosticoDTO>> findAllDiagnosticosDTO(DiagnosticoFilterRequest filter) {
-        List<DiagnosticoDTO> diagnosticos = service.findAllDiagnosticosDTO(filter);
+    public ResponseEntity<List<DiagnosticoDTO>> findDiagnosticos(DiagnosticoFilterRequest filter) {
+        List<DiagnosticoDTO> diagnosticos = service.findDiagnosticos(filter);
         return ResponseEntity.ok().body(diagnosticos);
     }
 }

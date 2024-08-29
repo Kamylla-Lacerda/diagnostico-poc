@@ -5,6 +5,8 @@ import com.poc.diagnostico.entity.Municipio;
 import com.poc.diagnostico.entity.Predio;
 import com.poc.diagnostico.entity.PredioEscola;
 import com.poc.diagnostico.entity.Regional;
+import com.poc.diagnostico.enums.StatusDiagnostico;
+import com.poc.diagnostico.enums.TipoPredio;
 import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.ObjectUtils;
@@ -58,4 +60,25 @@ public class DiagnosticoSpecification {
             return builder.like(predioJoin.get("nome"), "%" + escola + "%");
         };
     }
+
+    public static Specification<Diagnostico> tipoPredioContains(TipoPredio tipoPredio){
+        return (root, query, builder) -> {
+            if(ObjectUtils.isEmpty(tipoPredio)){
+                return null;
+            }
+            Join<Diagnostico, PredioEscola> predioEscolaJoin = root.join("predioEscola");
+            Join<PredioEscola, Predio> predioJoin = predioEscolaJoin.join("predio");
+            return builder.equal(predioJoin.get("tipo"), tipoPredio);
+        };
+    }
+
+    public static Specification<Diagnostico> statusContains(StatusDiagnostico statusDiagnostico){
+        return (root, query, builder) -> {
+            if(ObjectUtils.isEmpty(statusDiagnostico)){
+                return null;
+            }
+            return builder.equal(root.get("status"), statusDiagnostico);
+        };
+    }
+
 }

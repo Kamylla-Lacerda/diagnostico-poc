@@ -1,7 +1,7 @@
 package com.poc.diagnostico.service;
 
 import com.poc.diagnostico.dto.DiagnosticoDTO;
-import com.poc.diagnostico.dto.DiagnosticoFilterDTO;
+import com.poc.diagnostico.dto.DiagnosticoFilterRequest;
 import com.poc.diagnostico.mapper.DiagnosticoMapper;
 import com.poc.diagnostico.repository.DiagnosticoRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class DiagnosticoService {
     @Autowired
     private DiagnosticoMapper mapper;
 
-    public List<DiagnosticoDTO> findAllDiagnosticosDTO(DiagnosticoFilterDTO filter) {
+    public List<DiagnosticoDTO> findAllDiagnosticosDTO(DiagnosticoFilterRequest filter) {
         return mapper.diagnosticosToDiagnosticoDTOs(repository.findAll(filter.toSpecification()));
     }
 

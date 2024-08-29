@@ -1,6 +1,5 @@
 package com.poc.diagnostico.dto;
 
-import com.poc.diagnostico.entity.PredioEscola;
 import com.poc.diagnostico.enums.StatusDiagnostico;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

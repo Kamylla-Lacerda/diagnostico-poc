@@ -1,7 +1,6 @@
 package com.poc.diagnostico.entity;
 
-import com.poc.diagnostico.enums.TipoPredio;
-import jakarta.persistence.CascadeType;
+import com.poc.diagnostico.enums.TipoPredioEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,15 +10,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Setter
@@ -34,11 +31,40 @@ public class Predio {
     @Column(name = "ID_PREDIO")
     private Long id;
 
-    @Column(name = "DS_TIPO")
+    @Column(name = "CD_PREDIO")
+    private Long codigo;
+
+    @Column(name = "AA_CONSTRUCAO")
+    private Integer ano;
+
+    @Column(name = "DS_LOGRADOURO")
+    @Size(max = 100)
+    private String logradouro;
+
+    @Column(name = "NR_LOGRADOURO")
+    private Integer numero;
+
+    @Column(name = "DS_COMPLEMENTO")
+    @Size(max = 100)
+    private String complemento;
+
+    @Column(name = "DS_BAIRRO")
+    @Size(max = 100)
+    private String bairro;
+
+    @Column(name = "DS_DISTRITO")
+    @Size(max = 100)
+    private String distrito;
+
+    @Column(name = "DS_CEP")
+    @Size(max = 100)
+    private String cep;
+
+    @Column(name = "TP_PREDIO")
     @Enumerated(EnumType.STRING)
-    private TipoPredio tipo;
+    private TipoPredioEnum tipoPredio;
 
     @ManyToOne
-    @JoinColumn(name = "ID_REGIONAL")
-    private Regional regional;
+    @JoinColumn(name = "ID_MUNICIPIO_REGIONAL")
+    private MunicipioRegional municipioRegional;
 }

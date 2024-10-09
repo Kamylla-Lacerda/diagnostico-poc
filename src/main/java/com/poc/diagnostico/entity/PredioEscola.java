@@ -30,6 +30,9 @@ public class PredioEscola {
     @Column(name = "ID_PREDIO_ESCOLA")
     private Long id;
 
+    @Column(name = "FL_ENDERECO_PRINCIPAL")
+    private Boolean flagAtivo;
+
     @ManyToOne
     @JoinColumn(name = "ID_PREDIO")
     private Predio predio;
@@ -37,7 +40,4 @@ public class PredioEscola {
     @ManyToOne
     @JoinColumn(name = "ID_ESCOLA")
     private Escola escola;
-
-    @OneToMany(mappedBy = "predioEscola")
-    private List<Diagnostico> diagnosticos;
 }

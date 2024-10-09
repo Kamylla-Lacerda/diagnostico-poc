@@ -1,8 +1,8 @@
 package com.poc.diagnostico.enums;
 
-public enum TipoPredio {
+public enum TipoPredioEnum {
     CONSERVATORIO,
     REGIONAL_DE_ENSINO,
-    SOCIO_ESUCATIVOS,
-    ESCOLAR;
+    SOCIOEDUCATIVAS_PRISIONAIS,
+    ESCOLAR
 }

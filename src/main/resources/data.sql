@@ -1,75 +1,52 @@
-ALTER SEQUENCE public.tb_municipio_id_municipio_seq RESTART WITH 1;
+-- tb_municipio
+INSERT INTO tb_municipio (CD_MUNICIPIO, NM_MUNICIPIO, SG_UF, CD_COMPLETO, CD_CEP_INICIAL, CD_CEP_FINAL, FL_ATIVO) VALUES
+(3106200, 'Contagem', 'MG', 3106200, '32000-000', '32000-999', TRUE),
+(3100104, 'Belo Horizonte', 'MG', 3100104, '30000-000', '31999-999', TRUE),
+(3102305, 'Betim', 'MG', 3102305, '32600-000', '32699-999', TRUE),
+(3102305, 'Abadia dos Dourados', 'MG', 3107854, '32800-000', '32899-999', TRUE);
 
-ALTER SEQUENCE public.tb_regional_id_regional_seq RESTART WITH 1;
+-- tb_regional
+INSERT INTO tb_regional (CD_CENSO, NM_REGIONAL, NM_REGIONAL_REDUZIDO, SG_REGIONAL, DS_EMAIL, CD_SSC, FL_ATIVO) VALUES
+(3101, 'Superintendência Regional de Ensino Metropolitana A', 'SRE Metropolitana A', 'SMA', 'contato@srea.org.br', '1234', TRUE),
+(3102, 'Superintendência Regional de Ensino Metropolitana B', 'SRE Metropolitana B', 'SMB', 'contato@sreb.org.br', '5678', TRUE),
+(3103, 'Superintendência Regional de Ensino Monte Carmelo', 'SRE Monte Carmelo', 'SMC', 'contato@sremontecarmelo.org.br', '9101', TRUE);
 
-ALTER SEQUENCE public.tb_predio_id_predio_seq RESTART WITH 1;
+-- tb_municipio_regional
+INSERT INTO tb_municipio_regional (FL_ATIVO, ID_MUNICIPIO, ID_REGIONAL) VALUES
+(TRUE, 1, 2), -- Contagem - SRE Metropolitana B
+(TRUE, 2, 1), -- Belo Horizonte - SRE Metropolitana A
+(TRUE, 3, 2), -- Betim - SRE Metropolitana B
+(TRUE, 4, 1); -- Abadia dos Dourados - SRE Monte Carmelo
 
-ALTER SEQUENCE public.tb_escola_id_escola_seq RESTART WITH 1;
 
-ALTER SEQUENCE public.tb_predio_escola_id_predio_escola_seq RESTART WITH 1;
+-- tb_predio
+INSERT INTO tb_predio (CD_PREDIO, AA_CONSTRUCAO, DS_LOGRADOURO, NR_LOGRADOURO, DS_COMPLEMENTO, DS_BAIRRO, DS_DISTRITO, DS_CEP, TP_PREDIO, ID_MUNICIPIO_REGIONAL) VALUES
+(1001, 1990, 'Rua A', 10, '', 'Centro', 'Distrito 1', '32010-000', 'ESCOLAR', 2),
+(1002, 2000, 'Rua B', 200, '', 'Centro', 'Distrito 2', '30130-002', 'ESCOLAR', 2),
+(1003, 2012, 'Rua C', 300, 'Bloco A', 'Centro', 'Distrito 3', '32600-000', 'REGIONAL_DE_ENSINO', 1),
+(1004, 2018, 'Rua D', 400, '', 'São Jorge', 'Distrito 4', '38400-000', 'CONSERVATORIO', 3),
+(1005, 2021, 'Rua E', 500, '', 'Centro', 'Distrito 5', '36000-000', 'SOCIOEDUCATIVAS_PRISIONAIS', 4);
 
-ALTER SEQUENCE public.tb_diagnostico_id_diagnostico_seq RESTART WITH 1;
+-- tb_escola
+INSERT INTO tb_escola (CD_CENSO, NM_ESCOLA, NR_ALUNO) VALUES
+(12345678, 'Escola Municipal Dr. Francisco Gontijo', 500),
+(87654321, 'Escola Estadual Governador Milton Campos', 300),
+(11223344, 'Colégio Santo Agostinho', 450),
+(55667788, 'Escola Estadual Professor Eurico Vilela', 600),
+(99887766, 'Escola Estadual João XXIII', 350),
+(22334455, 'Escola Municipal Jardim Liberdade', 420);
 
-INSERT INTO tb_municipio
-(cod_munucipio, ds_nome, uf)
-VALUES
-(3101, 'Belo Horizonte', 'MG'),
-(3102, 'Uberlândia', 'MG'),
-(3103, 'Contagem', 'MG'),
-(3104, 'Juiz de Fora', 'MG'),
-(3105, 'Betim', 'MG');
+-- tb_predio_escola
+INSERT INTO tb_predio_escola (FL_ENDERECO_PRINCIPAL, ID_PREDIO, ID_ESCOLA) VALUES
+(TRUE, 1, 1),
+(TRUE, 2, 2),
+(TRUE, 3, 3),
+(TRUE, 4, 4),
+(TRUE, 5, 5),
+(TRUE, 1, 6),
+(FALSE, 4, 2);
 
-INSERT INTO tb_regional
-(id_municipio, ds_nome)
-VALUES
-(1, 'SRE Metropolitana A - Belo Horizonte'),
-(2, 'SRE Uberlândia'),
-(3, 'SRE Metropolitana B - Contagem'),
-(4, 'SRE Juiz de Fora'),
-(5, 'SRE Metropolitana C - Betim');
-
-INSERT INTO tb_predio
-(id_regional, ds_tipo)
-VALUES
-(1, 'CONSERVATORIO'),
-(2, 'REGIONAL_DE_ENSINO'),
-(3, 'SOCIO_ESUCATIVOS'),
-(4, 'ESCOLAR'),
-(5, 'ESCOLAR');
-
-INSERT INTO tb_escola
-(cod_censo, qnt_aluno, ds_nome)
-VALUES
-(31345678, 500, 'Escola Estadual Afonso Pena'),
-(31234567, 450, 'Escola Estadual Santos Dumont'),
-(31456789, 300, 'Escola Estadual Tiradentes'),
-(31567890, 200, 'Escola Municipal Joaquim Nabuco'),
-(31678901, 350, 'Escola Estadual Pedro II');
-
-INSERT INTO tb_predio_escola
-(id_escola, id_predio)
-VALUES
-(1, 1),  -- Escola Estadual Afonso Pena no Conservatório
-(2, 2),  -- Escola Estadual Santos Dumont na Regional de Ensino
-(3, 3),  -- Escola Estadual Tiradentes em SocioEducativas / Prisionais
-(4, 4),  -- Escola Municipal Joaquim Nabuco em Escolar
-(5, 5),  -- Escola Estadual Pedro II em Escolar
-(1, 4),  -- Escola Estadual Afonso Pena também em Escolar
-(2, 5),  -- Escola Estadual Santos Dumont também em Escolar
-(3, 1),  -- Escola Estadual Tiradentes também no Conservatório
-(4, 2),  -- Escola Municipal Joaquim Nabuco também na Regional de Ensino
-(5, 3);  -- Escola Estadual Pedro II também em SocioEducativas / Prisionais
-
-INSERT INTO tb_diagnostico
-(ano_diagnostico, id_predio_escola, ds_status)
-VALUES
-(2023, 1, 'CONCLUIDO'),
-(2023, 2, 'EM_ANDAMENTO'),
-(2022, 3, 'AGUARDANDO_DIRETOR'),
-(2023, 4, 'NAO_INICIADO'),
-(2022, 5, 'AGUARDANDO_SUPERINTENDENTE'),
-(2023, 1, 'EM_ANDAMENTO'),
-(2022, 2, 'CONCLUIDO'),
-(2023, 3, 'NAO_INICIADO'),
-(2022, 4, 'AGUARDANDO_SUPERINTENDENTE'),
-(2023, 5, 'AGUARDANDO_DIRETOR');
+-- tb_diagnostico
+INSERT INTO tb_diagnostico (QT_ALUNO, NM_ESCOLA, TP_ESCOLA, TP_ENSINO_ESCOLA, TP_PREDIO, FL_ENDERECO_PRINCIPAL, FL_TOMBAMENTO, NR_PAVIMENTOS, NR_BLOCOS, TP_CONSTRUCAO, QT_AREA_TOTAL, QT_AREA_CONSTRUIDA, DS_TELEFONE, DS_EMAIL, OB_PREDIO, AA_DIAGNOSTICO, ST_DIAGNOSTICO, DS_JUSTIFICATIVA_DIAGNOSTICO, ID_PREDIO_ESCOLA) VALUES
+(500, 'Escola Municipal Dr. Francisco Gontijo', 'REGULAR', 'ENSINO_FUNDAMENTAL_II', 'ESCOLAR', TRUE, 1, 3, 2, 'ALVENARIA_CONVENCIONAL', 1500.0, 1200.0, '3133333333', 'dr.gontijo@escola.com.br', 'Bom estado geral', 2023, 'CONCLUIDO', 'Diagnóstico realizado com sucesso.', 1),
+(300, 'Escola Estadual Governador Milton Campos', 'REGULAR', 'ENSINO_MEDIO', 'ESCOLAR', FALSE, 0, 2, 1, 'CONCRETO_ARMADO', 2000.0, 1600.0, '3144444444', 'milton.campos@escola.gov.br', 'Necessita de pequenas reformas', 2024, 'EM_ANDAMENTO', 'Reformas necessárias em algumas áreas.', 7);

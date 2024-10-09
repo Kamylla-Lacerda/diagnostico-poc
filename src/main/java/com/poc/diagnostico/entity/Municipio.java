@@ -5,15 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Setter
@@ -28,15 +26,28 @@ public class Municipio {
     @Column(name = "ID_MUNICIPIO")
     private Long id;
 
-    @Column(name = "DS_NOME")
+    @Column(name = "CD_MUNICIPIO")
+    private Long codigo;
+
+    @Column(name = "NM_MUNICIPIO")
+    @Size(max = 100)
     private String nome;
 
-    @Column(name = "COD_MUNUCIPIO")
-    private Integer codigo;
-
-    @Column(name = "UF")
+    @Column(name = "SG_UF")
+    @Size(min = 2, max = 2)
     private String uf;
 
-    @OneToMany(mappedBy = "municipio")
-    private List<Regional> regionais;
+    @Column(name = "CD_COMPLETO")
+    private Integer codigoCompleto;
+
+    @Column(name = "CD_CEP_INICIAL")
+    @Size(min = 9, max = 9)
+    private String cepInicial;
+
+    @Column(name = "CD_CEP_FINAL")
+    @Size(min = 9, max = 9)
+    private String cepFinal;
+
+    @Column(name = "FL_ATIVO")
+    private Boolean flagAtivo;
 }

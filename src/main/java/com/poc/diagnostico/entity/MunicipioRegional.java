@@ -1,17 +1,22 @@
 package com.poc.diagnostico.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Setter
@@ -19,22 +24,21 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tb_escola")
-public class Escola {
+@Table(name = "tb_municipio_regional")
+public class MunicipioRegional {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_ESCOLA")
+    @Column(name = "ID_MUNICIPIO_REGIONAL")
     private Long id;
 
-    @Column(name = "CD_CENSO")
-    private Integer codigoCenso;
+    @Column(name = "FL_ATIVO")
+    private Boolean flagAtivo;
 
-    @Column(name = "NM_ESCOLA")
-    @Size(max = 100)
-    private String nome;
+    @ManyToOne
+    @JoinColumn(name = "ID_MUNICIPIO")
+    private Municipio municipio;
 
-    //TODO: O que seria este numeroAluno?
-    @Column(name = "NR_ALUNO")
-    private Integer numeroAluno;
+    @ManyToOne
+    @JoinColumn(name = "ID_REGIONAL")
+    private Regional regional;
 }
-
